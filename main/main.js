@@ -3,14 +3,21 @@
 function printReceipt(inputs) {
   let allItemList = loadAllItems();
   let itemList = inputs.map(code => matchItemWithCode(code, allItemList));
-  let receiptDetailList = calculateReceiptDetail(itemList);
-  let total = sumTotal(receiptDetailList);
-  let formattedReceipt = formatReceiptString(receiptDetailList, total);
+  let receipt = calculateReceipt(itemList);
+  let formattedReceipt = formatReceiptString(receipt);
   console.log(formattedReceipt);
 }
 
 function matchItemWithCode(code, itemList) {
-  return itemList.find(item => item.barcode === code);
+  return itemList.find(({ barcode }) => barcode === code);
+}
+
+function calculateReceipt(itemList) {
+  let receiptDetailList = calculateReceiptDetail(itemList);
+  return {
+    receiptDetailList: receiptDetailList,
+    total: sumTotal(receiptDetailList),
+  };
 }
 
 function calculateReceiptDetail(itemList) {
@@ -34,15 +41,15 @@ function countItem(itemList) {
   }, new Map());
 }
 
-function calculateSubtotal(item, count) {
-  return item.price * count;
+function calculateSubtotal({ price }, count) {
+  return price * count;
 }
 
 function sumTotal(receiptDetailList) {
   return receiptDetailList.reduce((total, receiptDetail) => total += receiptDetail.subtotal, 0);
 }
 
-function formatReceiptString(receiptDetailList, total) {
+function formatReceiptString({ receiptDetailList, total }) {
   let formattedReceipt = `***<store earning no money>Receipt ***`;
   receiptDetailList.forEach(receiptDetail => {
     formattedReceipt = `${formattedReceipt}
