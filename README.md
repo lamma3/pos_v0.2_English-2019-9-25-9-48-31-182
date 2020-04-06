@@ -71,3 +71,7 @@ Total: 23.00 (yuan)
    ```
 
 4. You should learn and be good at using the Console feature in the developer tools that come with the popular browsers.
+
+## Context Map
+
+![](context-map.png)
