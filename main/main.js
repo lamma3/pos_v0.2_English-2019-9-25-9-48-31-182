@@ -50,14 +50,15 @@ function sumTotal(receiptDetailList) {
 }
 
 function formatReceiptString({ receiptDetailList, total }) {
+  const FIXED_DIGIT = 2;
   let formattedReceipt = `***<store earning no money>Receipt ***`;
   receiptDetailList.forEach(receiptDetail => {
     formattedReceipt = `${formattedReceipt}
-Name: ${receiptDetail.item.name}, Quantity: ${receiptDetail.count} ${receiptDetail.item.unit}, Unit: ${receiptDetail.item.price.toFixed(2)} (yuan), Subtotal: ${receiptDetail.subtotal.toFixed(2)} (yuan)`;
+Name: ${receiptDetail.item.name}, Quantity: ${receiptDetail.count} ${receiptDetail.item.unit}, Unit: ${receiptDetail.item.price.toFixed(FIXED_DIGIT)} (yuan), Subtotal: ${receiptDetail.subtotal.toFixed(FIXED_DIGIT)} (yuan)`;
   });
   formattedReceipt = `${formattedReceipt}
 ----------------------
-Total: ${total.toFixed(2)} (yuan)
+Total: ${total.toFixed(FIXED_DIGIT)} (yuan)
 **********************`;
   return formattedReceipt;
 }
